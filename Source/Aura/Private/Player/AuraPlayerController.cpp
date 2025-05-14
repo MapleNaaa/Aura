@@ -4,10 +4,37 @@
 #include "Player/AuraPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Interaction/EnemyInterface.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
 	
+}
+
+void AAuraPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+
+	CursorTrace();
+}
+
+
+void AAuraPlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECC_Visibility,false,CursorHit);
+	// 继承于 PlayerController， 通过 GetHitResultAtScreen 实现
+	if (!CursorHit.bBlockingHit) return;
+
+	LastActor = ThisActor;
+	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
+
+	// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("LastActor: %s"), ToCStr(LastActor.GetName())));
+	// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("ThisActor: %s"), ToCStr(ThisActor.GetName())));
+	
+	// 逻辑判断
+	if (LastActor != nullptr) LastActor->UnHighlightActor();
+	if (ThisActor != nullptr) ThisActor->HighlightActor();
 }
 
 void AAuraPlayerController::BeginPlay()
@@ -55,6 +82,7 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 
 	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X); // axis 单个轴， axes复合轴
 	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	// FRotationMatrix 将以欧拉角形式的旋转（FRotator）转换为旋转矩阵。
 
 	if (APawn* ControlledPawn = GetPawn())
 	{
