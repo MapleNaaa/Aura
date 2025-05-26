@@ -29,5 +29,5 @@ protected:
 	TObjectPtr<UAttributeSet> AttributeSet;
 
 private:
-	virtual void SetOwner(AActor* NewOwner) override;
+	// virtual void SetOwner(AActor* NewOwner) override;
 };
