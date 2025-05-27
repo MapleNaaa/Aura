@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class AURA_API UAuraUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
