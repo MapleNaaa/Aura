@@ -45,10 +45,15 @@ void AAuraPlayerController::BeginPlay()
 	UEnhancedInputLocalPlayerSubsystem* EnhancedInputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 	// EnhancedInputSubsystem = GetLocalPlayer()->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
 	// ULocalPlayer 方便解耦本地玩家的输入、显示与游戏逻辑，支持灵活的单人/多人模式切换，并通过可扩展的接口满足定制化需求
-	check(EnhancedInputSubsystem);
 
-	EnhancedInputSubsystem->AddMappingContext(AuraContext,0); // 加入输入上下文
+	// check(EnhancedInputSubsystem);
+	// 非本地控制的 PlayerController（如服务器或远程客户端）无法获取输入子系统，需检查空指针
 
+	if (EnhancedInputSubsystem)
+	{
+		EnhancedInputSubsystem->AddMappingContext(AuraContext,0); // 加入输入上下文
+	}
+	
 	bShowMouseCursor = true; // 继承于 PlayerController
 	DefaultMouseCursor = EMouseCursor::Default;
 
