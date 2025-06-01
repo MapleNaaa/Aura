@@ -40,11 +40,12 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	
 	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
 	EffectContextHandle.AddSourceObject(this);
-	FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass,1.0f,EffectContextHandle);
+	
+	// EffectContextHandle.AddInstigator(this, this);
+	FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass,ActorLevel,EffectContextHandle);
 	const FActiveGameplayEffectHandle ActiveEffectHandle = TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 	// ApplyGameplayEffectSpecToSelf 函数允许开发者通过自定义的 FGameplayEffectSpec 对象来应用一个 Gameplay Effect。这种方法提供了更高的灵活性，因为它允许在应用之前修改和调整 FGameplayEffectSpec 的属性
 	// ApplyGameplayEffectToSelf 函数直接通过指定的 TSubclassOf<UGameplayEffect> 来应用一个 Gameplay Effect。这种方法更加简单直接，但缺乏对 FGameplayEffectSpec 的进一步控制。
-
 	const bool bIsInfinite = (EffectSpecHandle.Data.Get()->Def.Get()->DurationPolicy == EGameplayEffectDurationType::Infinite);
 	if (bIsInfinite && InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
