@@ -9,6 +9,7 @@
 
 // 如果要重构文件结构，可以直接在文件夹中修改，然后删除InterMediate和Binaries，点击uproject用rider打开
 
+class UGameplayEffect;
 class UAttributeSet;
 
 UCLASS(Abstract) // 防止该基类被实例化
@@ -40,4 +41,11 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Attributes")
+	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
+
+	void InitializePrimaryAttributes() const;
+	
 };
