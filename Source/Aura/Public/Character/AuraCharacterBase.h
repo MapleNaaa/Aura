@@ -26,6 +26,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void InitAbilityActorInfo() ;
+
+
 	// TObjectPtr 在打包时，和raw相同，但是在编辑器版本中，有 access tracking 和 lazy loading
 
 	// 骨骼网格组件 / 用于手持武器 / AuraCharacterBase

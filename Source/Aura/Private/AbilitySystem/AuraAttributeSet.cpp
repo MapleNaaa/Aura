@@ -36,7 +36,7 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 		NewValue = FMath::Clamp(NewValue, 0.0f, GetMaxHealth());
 		float PostValue = GetHealth();
 		float PostBaseValue = Attribute.GetGameplayAttributeData(this)->GetBaseValue();
-		UE_LOG(LogTemp, Warning, TEXT("Health : current %f, base %f"), PostValue,PostBaseValue);
+		// UE_LOG(LogTemp, Warning, TEXT("Health : current %f, base %f"), PostValue,PostBaseValue);
 	}
 
 	if (Attribute == GetManaAttribute())
@@ -45,7 +45,7 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 		NewValue = FMath::Clamp(NewValue, 0.0f, GetMaxMana());
 		float PostValue = GetMana();
 		float PostBaseValue = Attribute.GetGameplayAttributeData(this)->GetBaseValue();
-		UE_LOG(LogTemp, Warning, TEXT("Mana : current %f, base %f"), PostValue,PostBaseValue);
+		// UE_LOG(LogTemp, Warning, TEXT("Mana : current %f, base %f"), PostValue,PostBaseValue);
 	}
 }
 
